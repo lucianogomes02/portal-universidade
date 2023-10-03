@@ -4,7 +4,7 @@ const state = {
     user: null
 };
 
-const store = createStore({
+const index = createStore({
     state,
     getters: {
         user: (state) => {
@@ -23,4 +23,4 @@ const store = createStore({
     },
 });
 
-export default store;
+export default index;
