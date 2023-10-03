@@ -60,7 +60,7 @@ export default {
       ).then( response => {
         try {
           this.setUserAndToken(response.data.access);
-          this.$router.push({ name: "Home" });
+          this.$router.push({ name: "HomeView" });
         } catch (error) {
           this.handleError(error);
         }
