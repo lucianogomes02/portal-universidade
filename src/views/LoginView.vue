@@ -71,9 +71,12 @@ export default {
     setUserAndToken(token) {
       const tokenData = this.decodeUserToken(token);
       localStorage.setItem("token", token);
-      localStorage.setItem("id", tokenData.user.id);
-      localStorage.setItem("username", tokenData.user.user_name);
-      localStorage.setItem("permissions", tokenData.user.permissions);
+      const user = {
+        "id": tokenData.user.id,
+        "username": tokenData.user.user_name,
+        "permissions": tokenData.user.permissions,
+      }
+      this.$store.dispatch("setUser", user);
     },
     decodeUserToken(token) {
       try{
