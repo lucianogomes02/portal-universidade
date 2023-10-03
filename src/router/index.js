@@ -18,4 +18,14 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+
+  if (to.name !== 'LoginView' && !token) {
+    next({ name: 'LoginView' });
+  } else {
+    next();
+  }
+});
+
 export default router
