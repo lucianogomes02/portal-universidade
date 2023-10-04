@@ -1,9 +1,11 @@
 <template>
   <header class="header-section">
-    <router-link to="/home">Portal Universidade</router-link>
+    <div class="header-title">
+      <router-link  to="/home">Portal Universidade</router-link>
+    </div>
     <div class="menu-dropdown">
       <button class="button-dropdown">
-        Olá, {{ user.username }}
+        Olá, {{ user && user.username ? user.username : 'Usuário' }}
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="content">
@@ -36,6 +38,17 @@ export default {
   background-color: #333;
   margin: 0 auto;
   display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
 }
 
 .header-section a {
@@ -71,8 +84,7 @@ export default {
   display: none;
   position: absolute;
   background-color: #333;
-  min-width: 160px;
-  z-index: 1;
+  min-width: 100%;
 }
 
 .content a {
