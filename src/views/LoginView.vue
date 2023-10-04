@@ -73,7 +73,7 @@ export default {
       localStorage.setItem("token", token);
       const user = {
         "id": tokenData.user.id,
-        "username": tokenData.user.user_name,
+        "username": tokenData.user.username,
         "permissions": tokenData.user.permissions,
       }
       this.$store.dispatch("setUser", user);

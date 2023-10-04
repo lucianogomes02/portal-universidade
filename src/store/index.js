@@ -4,7 +4,7 @@ const state = {
     user: null
 };
 
-const index = createStore({
+const store = createStore({
     state,
     getters: {
         user: (state) => {
@@ -13,7 +13,7 @@ const index = createStore({
     },
     actions: {
         setUser(context, user){
-            context.commit("user");
+            context.commit("user", user);
         }
     },
     mutations: {
@@ -23,4 +23,4 @@ const index = createStore({
     },
 });
 
-export default index;
+export default store;
