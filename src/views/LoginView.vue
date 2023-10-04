@@ -137,5 +137,6 @@ export default {
   border: 1px solid #b6b6b6;
   border-radius: 15px;
   font-family: inherit;
+  font-size: 2vh;
 }
 </style>
