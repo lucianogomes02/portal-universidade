@@ -24,7 +24,6 @@ const router = createRouter({
       path: '/alunos',
       name: 'Alunos',
       component: StudentsView,
-      props: true
     },
     {
       path: '/professores',
