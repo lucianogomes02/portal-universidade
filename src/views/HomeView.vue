@@ -4,7 +4,9 @@
     <h3>Qual portal você deseja acessar?</h3>
     <div class="models-container">
       <div class="card-buttons" v-for="(permissionValue, permissionName) in userPermissions" :key="permissionName">
-        <CardButton v-if="permissionValue" :modelName="getModelName(permissionName)" />
+        <router-link v-if="permissionValue" :to="defineModelPathByPermissionName(permissionName)" :modelName="getModelName(permissionName)">
+          <CardButton :modelName="getModelName(permissionName)" />
+        </router-link>
       </div>
     </div>
   </main>
@@ -37,6 +39,13 @@ export default {
         canViewCourse: "Disciplinas",
         canViewGrade: "Notas",
       },
+      modelsPaths: {
+          "Alunos": "#",
+          "Professores": "#",
+          "Coordenadores": "#",
+          "Disciplinas": "#",
+          "Notas": "#",
+      }
     }
   },
   created() {
@@ -66,6 +75,9 @@ export default {
     getModelName(permissionName) {
       return this.modelsNamesByPermission[permissionName] || "";
     },
+    defineModelPathByPermissionName(permissionName) {
+      return `/${this.modelsNamesByPermission[permissionName].toLowerCase()}`
+    }
   },
 };
 
