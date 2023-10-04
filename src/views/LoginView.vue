@@ -80,8 +80,7 @@ export default {
     },
     decodeUserToken(token) {
       try{
-        let decodedToken = VueJwtDecode.decode(token);
-        return decodedToken;
+        return VueJwtDecode.decode(token);
       }
       catch(error){
         return error
