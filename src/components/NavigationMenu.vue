@@ -1,6 +1,6 @@
 <template>
   <header class="header-section">
-    <a href="#">Portal Universidade</a>
+    <router-link to="/home">Portal Universidade</router-link>
     <div class="menu-dropdown">
       <button class="button-dropdown">
         Olá, {{ user.username }}
