@@ -1,27 +1,35 @@
 <template>
   <main class="login-page">
-    <h1>Entre na sua conta</h1>
-    <MessageModal
-        v-if="loginError"
-        :is-visible="loginError"
-        :message="errorMessage"
-        @close="loginError = false"
-    ></MessageModal>
-    <form class="login-form">
-      <input
-          class="email-field"
-          type="text"
-          placeholder="E-mail"
-          v-model="email"
-      />
-      <input
-          class="password-field"
-          type="password"
-          placeholder="Senha"
-          v-model="password"
-      />
-    </form>
-    <ButtonComponent :button="loginButton" @click="handleLogin"/>
+    <div class="center-container">
+      <h1>Entre na sua conta</h1>
+      <MessageModal
+          v-if="loginError"
+          :is-visible="loginError"
+          :message="errorMessage"
+          @close="loginError = false"
+      ></MessageModal>
+      <form class="login-form">
+        <div class="form-group">
+          <input
+              class="email-field"
+              type="text"
+              placeholder="E-mail"
+              v-model="email"
+          />
+        </div>
+        <div class="form-group">
+          <input
+              class="password-field"
+              type="password"
+              placeholder="Senha"
+              v-model="password"
+          />
+        </div>
+      </form>
+      <div class="form-group">
+        <ButtonComponent :button="loginButton" @click="handleLogin" />
+      </div>
+    </div>
   </main>
 </template>
 
@@ -43,8 +51,11 @@ export default {
       loginButton: {
         title: "Login",
         styles: {
-          backgroundColor: "blue",
+          backgroundColor: "#00ff00",
+          fontFamily: "inherit",
           fontSize: "16px",
+          height: "4vh",
+          width: "14vh",
         },
       },
     };
@@ -100,5 +111,31 @@ export default {
 </script>
 
 <style scoped>
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
+.center-container {
+  text-align: center;
+}
+
+.login-form {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.password-field, .email-field{
+  height: 5vh;
+  width: 28vh;
+  background-color: inherit;
+  border: 1px solid #b6b6b6;
+  border-radius: 15px;
+  font-family: inherit;
+}
 </style>
