@@ -1,9 +1,6 @@
 <template>
-    <button
-        class="button"
-        :style="button.styles"
-    >
-      {{ button.title }}
+    <button class="button">
+      {{ buttonName }}
     </button>
 </template>
 
@@ -11,24 +8,29 @@
 export default {
   name: "ButtonComponent",
   props: {
-    button: {
-      required: true,
-      type: Object,
-    },
+    buttonName: {
+      type: String,
+      required: true
+    }
   },
 };
 </script>
 
-<style scoped>
+<style>
 .button {
-  margin-top: 1px;
-  border: none;
-  color: #ffffff;
-  background-color: #000;
-  border-radius: 41px;
+  color: #28a400;
+  border: 2px solid #28a400;
+
+  font-size: 14px;
+  max-width: 90px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: transparent;
+  padding: 8px 10px;
+  min-height: 20px;
 }
 
 .button:hover {
-  opacity: 80%;
+  background-color: #dbdef6;
 }
 </style>

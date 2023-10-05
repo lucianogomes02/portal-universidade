@@ -27,7 +27,7 @@
         </div>
       </form>
       <div class="form-group">
-        <ButtonComponent :button="loginButton" @click="handleLogin" />
+        <ButtonComponent class="login-button" buttonName="Login" @click="handleLogin" />
       </div>
     </div>
   </main>
@@ -37,7 +37,6 @@
 import ButtonComponent from "@/components/ButtonComponent.vue";
 import axios from "@/services";
 import MessageModal from "@/components/MessageModal.vue";
-import VueJwtDecode from "vue-jwt-decode";
 
 export default {
   name: "LoginView",
@@ -48,16 +47,6 @@ export default {
       password: "",
       loginError: false,
       errorMessage: "",
-      loginButton: {
-        title: "Login",
-        styles: {
-          backgroundColor: "#00ff00",
-          fontFamily: "inherit",
-          fontSize: "16px",
-          height: "4vh",
-          width: "14vh",
-        },
-      },
     };
   },
   methods: {
@@ -83,20 +72,14 @@ export default {
       localStorage.setItem("token", authData.access);
       this.$store.dispatch("setUser", authData.user);
     },
-    decodeUserToken(token) {
-      try{
-        return VueJwtDecode.decode(token);
-      }
-      catch(error){
-        return error
-      }
-    },
     handleError(error) {
       if (!error) {
         this.errorMessage = "Usuário ou Senha inválidos";
         this.loginError = true;
       } else {
-        this.errorMessage = error
+        const errorValue = Object.values(error);
+        const errorString = errorValue[0];
+        this.errorMessage = Object.values(errorString);
         this.loginError = true;
       }
     }
@@ -126,11 +109,17 @@ export default {
 
 .password-field, .email-field{
   height: 5vh;
-  width: 28vh;
+  width: 35vh;
   background-color: inherit;
   border: 1px solid #b6b6b6;
-  border-radius: 15px;
+  border-radius: 10px;
   font-family: inherit;
+  font-size: 2.5vh;
+}
+
+.login-button {
+  height: 5vh;
+  width: 28vh;
   font-size: 2vh;
 }
 </style>

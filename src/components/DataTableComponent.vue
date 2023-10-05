@@ -21,12 +21,12 @@
           </div>
         </td>
         <td class="action-buttons">
-            <button class="edit-button">
-              Editar
-            </button>
-          <button class="delete-button">
-              Deletar
-          </button>
+          <ButtonComponent class="edit-button" buttonName="Editar">
+            Editar
+          </ButtonComponent>
+          <ButtonComponent class="delete-button" buttonName="Deletar">
+            Deletar
+          </ButtonComponent>
         </td>
       </tr>
       </tbody>
@@ -35,10 +35,12 @@
 </template>
 
 <script>
+import ButtonComponent from "@/components/ButtonComponent.vue";
+
 export default {
   name: "DataTableComponent",
-  components: {},
-  props: ["dataJSON", "dataFields"],
+  components: {ButtonComponent},
+  props: ["dataJSON", "dataFields", "queryUrlForEntity"],
 };
 </script>
 
@@ -111,17 +113,6 @@ export default {
 .delete-button {
   color: #d00000;
   border: 2px solid #d00000;
-}
-
-.edit-button,
-.delete-button {
-  font-size: 14px;
-  max-width: 90px;
-  cursor: pointer;
-  border-radius: 5px;
-  background-color: transparent;
-  padding: 8px 10px;
-  min-height: 20px;
 }
 
 .edit-button:hover,

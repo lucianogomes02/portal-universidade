@@ -1,7 +1,9 @@
 <template>
-  <NavigationMenu :user="user" />
-    <h3>Alunos</h3>
-  <DataTableComponent :dataJSON="students" :dataFields="dataFields"/>
+  <main class="model-list-container">
+    <NavigationMenu :user="user" />
+    <h3 class="main-title">Alunos</h3>
+    <DataTableComponent :dataJSON="students" :dataFields="dataFields" :queryUrlForEntity="queryUrlForEntity"/>
+  </main>
 </template>
 
 <script>
@@ -24,7 +26,8 @@ export default {
         "name": "Nome",
         "email": "E-mail",
         "birth_date": "Data de Nascimento"
-      }
+      },
+      queryUrlForEntity: "students/"
     }
   },
   setup() {
@@ -47,5 +50,11 @@ export default {
 </script>
 
 <style scoped>
-
+.main-title {
+  text-align: center;
+  margin-top: 5vh;
+  margin-bottom: 0;
+  font-weight: 500;
+  font-size: 30px;
+}
 </style>

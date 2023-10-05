@@ -5,7 +5,7 @@
         <p>{{ message }}</p>
       </div>
       <div class="modal-button">
-        <ButtonComponent class="close-button" :button="messageButton" @click="closeModal" />
+        <ButtonComponent class="close-button" buttonName="Ok" @click="closeModal" />
       </div>
     </div>
   </div>
@@ -19,19 +19,6 @@ export default {
   props: {
     isVisible: Boolean,
     message: String,
-  },
-  data() {
-    return {
-      messageButton: {
-        title: "Ok",
-        styles: {
-          backgroundColor: "#00ff00",
-          fontFamily: "inherit",
-          fontSize: "16px",
-          height: "4vh",
-          width: "10vh",
-        },
-    } }
   },
   methods: {
     closeModal() {
