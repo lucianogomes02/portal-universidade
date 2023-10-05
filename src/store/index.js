@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 const state = {
     user: null,
     userDataToEdit: null,
+    queryUrlForEntity: null
 };
 
 const store = createStore({
@@ -17,6 +18,9 @@ const store = createStore({
         },
         userDataToEdit: (state) => {
             return state.userDataToEdit;
+        },
+        queryUrlForEntity: (state) => {
+            return state.queryUrlForEntity;
         }
     },
     actions: {
@@ -25,6 +29,9 @@ const store = createStore({
         },
         setUserDataToEdit: (context, userDataToEdit) => {
             context.commit("userDataToEdit", userDataToEdit);
+        },
+        setQueryUrlForEntity: (context, queryUrlForEntity) => {
+            context.commit("queryUrlForEntity", queryUrlForEntity);
         }
     },
     mutations: {
@@ -33,6 +40,9 @@ const store = createStore({
         },
         userDataToEdit(state, userDataToEdit) {
             state.userDataToEdit = userDataToEdit;
+        },
+        queryUrlForEntity(state, queryUrlForEntity) {
+            state.queryUrlForEntity = queryUrlForEntity;
         }
     },
 });

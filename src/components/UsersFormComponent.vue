@@ -11,14 +11,20 @@
           v-model="formData[key]"
       />
     </div>
-    <button type="submit">Enviar</button>
+    <button @click="submitFormToEditUser">Enviar</button>
   </form>
 </template>
 
 <script>
+import axios from "@/services";
+import {mapGetters} from "vuex";
+
 export default {
   name: "UsersFormComponent",
   props: ["userData"],
+  computed: {
+    ...mapGetters(["queryUrlForEntity"]),
+  },
   data() {
     return {
       formFields: {
@@ -30,8 +36,22 @@ export default {
     };
   },
   methods: {
-    submitForm() {
-      console.log(this.formData);
+    submitFormToEditUser() {
+      const requestUrl = `${this.queryUrlForEntity}${this.userData.id}/`
+      const updatedUserData = {
+        id: this.formData.id,
+        name: this.formData.name,
+        email: this.formData.email,
+        birth_date: this.formData.birth_date
+      }
+
+      axios.put(requestUrl, updatedUserData)
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            console.log(error)
+          })
     },
   },
 }
