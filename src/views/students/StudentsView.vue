@@ -1,8 +1,11 @@
 <template>
   <main class="model-list-container">
     <NavigationMenu :user="user" />
-    <h3 class="main-title">Alunos</h3>
-    <DataTableComponent :dataJSON="students" :dataFields="dataFields" :queryUrlForEntity="queryUrlForEntity"/>
+    <section v-if="students" class="main-section">
+      <h3 class="main-title">Alunos</h3>
+      <DataTableComponent :dataJSON="students" :dataFields="dataFields" :queryUrlForEntity="queryUrlForEntity"/>
+    </section>
+    <h3 v-else class="error-text">Opa! Parece que não há Alunos aqui. Qualquer dúvida, entre em contato com nosso Suporte :)</h3>
   </main>
 </template>
 
@@ -56,5 +59,10 @@ export default {
   margin-bottom: 0;
   font-weight: 500;
   font-size: 30px;
+}
+
+.error-text {
+  text-align: center;
+  margin-top: 10vh;
 }
 </style>
