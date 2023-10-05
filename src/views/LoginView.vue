@@ -35,7 +35,7 @@
 
 <script lang="js">
 import ButtonComponent from "@/components/ButtonComponent.vue";
-import axios from "../services";
+import axios from "@/services";
 import MessageModal from "@/components/MessageModal.vue";
 import VueJwtDecode from "vue-jwt-decode";
 
@@ -70,7 +70,7 @@ export default {
           }
       ).then( response => {
         try {
-          this.setUserAndToken(response.data.access);
+          this.setUserAndToken(response.data);
           this.$router.push({ name: "HomeView" });
         } catch (error) {
           this.handleError(error);
@@ -79,15 +79,9 @@ export default {
         this.handleError();
       });
     },
-    setUserAndToken(token) {
-      const tokenData = this.decodeUserToken(token);
-      localStorage.setItem("token", token);
-      const user = {
-        "id": tokenData.user.id,
-        "username": tokenData.user.username,
-        "permissions": tokenData.user.permissions,
-      }
-      this.$store.dispatch("setUser", user);
+    setUserAndToken(authData) {
+      localStorage.setItem("token", authData.access);
+      this.$store.dispatch("setUser", authData.user);
     },
     decodeUserToken(token) {
       try{
