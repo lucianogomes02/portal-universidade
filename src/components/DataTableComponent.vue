@@ -2,22 +2,22 @@
   <section class="data-table-container">
     <table class="data-table">
       <thead class="data-table-columns">
-        <tr>
-          <th v-for="(dataValue, dataKey) in dataJSON[0]" :key="dataKey">
-            <div class="column-name" v-if="dataKey !== 'id'">
-              {{ dataFields[dataKey] }}
-            </div>
-          </th>
-          <th>
-            Ações
-          </th>
-        </tr>
+      <tr>
+        <th v-for="(dataValue, dataKey) in dataJSON[0]" :key="dataKey">
+          <div class="column-name" v-if="dataKey !== 'id'">
+            {{ dataFields[dataKey] }}
+          </div>
+        </th>
+        <th>
+          Ações
+        </th>
+      </tr>
       </thead>
       <tbody class="data-table-rows">
       <tr v-for="(data, index) in dataJSON" :key="index">
         <td v-for="(dataValue, dataKey) in data" :key="dataKey">
-          <div v-if="dataKey !== 'id'" class="row-value">
-            {{ dataValue }}
+          <div class="row-value">
+            {{ dataKey !== 'id' ? (dataKey === 'birth_date' ? formatDate(dataValue) : dataValue) : '' }}
           </div>
         </td>
         <td class="action-buttons">
@@ -41,6 +41,15 @@ export default {
   name: "DataTableComponent",
   components: {ButtonComponent},
   props: ["dataJSON", "dataFields", "queryUrlForEntity"],
+  methods: {
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+  }
 };
 </script>
 
@@ -113,6 +122,7 @@ export default {
 .delete-button {
   color: #d00000;
   border: 2px solid #d00000;
+  margin-left: 1vh;
 }
 
 .edit-button:hover,
