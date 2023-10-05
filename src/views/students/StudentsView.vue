@@ -3,7 +3,13 @@
     <NavigationMenu :user="user" />
     <section v-if="students" class="main-section">
       <h3 class="main-title">Alunos</h3>
-      <DataTableComponent :dataJSON="students" :dataFields="dataFields" :queryUrlForEntity="queryUrlForEntity"/>
+      <DataTableComponent
+          :dataJSON="students"
+          :dataFields="dataFields"
+          :queryUrlForEntity="queryUrlForEntity"
+          :userPermissions="user.permissions"
+          :permissionToEdit="permissionToEdit"
+      />
     </section>
     <h3 v-else class="error-text">Opa! Parece que não há Alunos aqui. Qualquer dúvida, entre em contato com nosso Suporte :)</h3>
   </main>
@@ -30,7 +36,8 @@ export default {
         "email": "E-mail",
         "birth_date": "Data de Nascimento"
       },
-      queryUrlForEntity: "students/"
+      queryUrlForEntity: "students/",
+      permissionToEdit: "users.change_student",
     }
   },
   setup() {

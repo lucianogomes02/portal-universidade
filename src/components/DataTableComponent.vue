@@ -2,33 +2,33 @@
   <section class="data-table-container">
     <table class="data-table">
       <thead class="data-table-columns">
-      <tr>
-        <th v-for="(dataValue, dataKey) in dataJSON[0]" :key="dataKey">
-          <div class="column-name" v-if="dataKey !== 'id'">
-            {{ dataFields[dataKey] }}
-          </div>
-        </th>
-        <th>
-          Ações
-        </th>
-      </tr>
+        <tr>
+          <th v-for="(dataValue, dataKey) in dataJSON[0]" :key="dataKey">
+            <div class="column-name" v-if="dataKey !== 'id'">
+              {{ dataFields[dataKey] }}
+            </div>
+          </th>
+          <th>
+            <div class="actions-column" v-if="showActionsColumn"> Ações </div>
+          </th>
+        </tr>
       </thead>
       <tbody class="data-table-rows">
-      <tr v-for="(data, index) in dataJSON" :key="index">
-        <td v-for="(dataValue, dataKey) in data" :key="dataKey">
-          <div class="row-value">
-            {{ dataKey !== 'id' ? (dataKey === 'birth_date' ? formatDate(dataValue) : dataValue) : '' }}
-          </div>
-        </td>
-        <td class="action-buttons">
-          <ButtonComponent class="edit-button" buttonName="Editar">
-            Editar
-          </ButtonComponent>
-          <ButtonComponent class="delete-button" buttonName="Deletar">
-            Deletar
-          </ButtonComponent>
-        </td>
-      </tr>
+        <tr v-for="(data, index) in dataJSON" :key="index">
+          <td v-for="(dataValue, dataKey) in data" :key="dataKey">
+            <div class="row-value">
+              {{ dataKey !== 'id' ? (dataKey === 'birth_date' ? formatDate(dataValue) : dataValue) : '' }}
+            </div>
+          </td>
+          <td class="action-buttons" v-if="showActionsColumn">
+            <ButtonComponent class="edit-button" buttonName="Editar">
+              Editar
+            </ButtonComponent>
+            <ButtonComponent class="delete-button" buttonName="Deletar" >
+              Deletar
+            </ButtonComponent>
+          </td>
+        </tr>
       </tbody>
     </table>
   </section>
@@ -40,7 +40,12 @@ import ButtonComponent from "@/components/ButtonComponent.vue";
 export default {
   name: "DataTableComponent",
   components: {ButtonComponent},
-  props: ["dataJSON", "dataFields", "queryUrlForEntity"],
+  props: ["dataJSON", "dataFields", "queryUrlForEntity", "userPermissions", "permissionToEdit"],
+  computed: {
+    showActionsColumn() {
+      return this.userHasPermissionToEdit(this.permissionToEdit);
+    },
+  },
   methods: {
     formatDate(dateString) {
       const date = new Date(dateString);
@@ -48,8 +53,12 @@ export default {
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = date.getFullYear();
       return `${day}/${month}/${year}`;
-    }
-  }
+    },
+    userHasPermissionToEdit(permissionNeeded) {
+      console.log(this.userPermissions)
+      return this.userPermissions.includes(permissionNeeded);
+    },
+  },
 };
 </script>
 
@@ -59,8 +68,8 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 60vh;
-  width: 100vw;
   background-color: #fff;
+  overflow-x: auto;
 }
 
 .data-table {
@@ -70,6 +79,8 @@ export default {
   border-collapse: collapse;
   border-radius: 5px;
   box-shadow: 3px 3px 3px 3px rgba(154, 141, 141, 0.77);
+  table-layout: fixed;
+  word-break: break-word;
 }
 
 .column-name {
@@ -78,6 +89,11 @@ export default {
 
 .data-table-columns {
   background-color: #f2f2f2;
+}
+
+.actions-column {
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .data-table-columns th {
@@ -107,6 +123,7 @@ export default {
   font-weight: 400;
   letter-spacing: 0.25px;
   white-space: nowrap;
+  margin-top: 1vh;
 
   display: flex;
   flex-direction: row;
