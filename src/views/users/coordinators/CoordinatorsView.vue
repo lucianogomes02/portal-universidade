@@ -9,6 +9,7 @@
           :queryUrlForEntity="queryUrlForEntity"
           :userPermissions="user.permissions"
           :permissionToEdit="permissionToEdit"
+          :modelToEdit="modelToEdit"
       />
     </section>
     <h3 v-else class="error-text">Opa! Parece que não há Coordenadores aqui. Qualquer dúvida, entre em contato com nosso Suporte :)</h3>
@@ -38,6 +39,7 @@ export default {
       },
       queryUrlForEntity: "coordinators/",
       permissionToEdit: "users.change_coordinator",
+      modelToEdit: "Coordenadores Edit"
     }
   },
   setup() {

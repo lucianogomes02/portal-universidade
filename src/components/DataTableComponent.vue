@@ -21,10 +21,10 @@
             </div>
           </td>
           <td class="action-buttons" v-if="showActionsColumn">
-            <ButtonComponent class="edit-button" buttonName="Editar">
+            <ButtonComponent class="edit-button" buttonName="Editar" @click="editModelData(data.id)">
               Editar
             </ButtonComponent>
-            <ButtonComponent class="delete-button" buttonName="Deletar" >
+            <ButtonComponent class="delete-button" buttonName="Deletar" @click="deleteModelData(data.id)">
               Deletar
             </ButtonComponent>
           </td>
@@ -36,11 +36,12 @@
 
 <script>
 import ButtonComponent from "@/components/ButtonComponent.vue";
+import axios from "@/services";
 
 export default {
   name: "DataTableComponent",
   components: {ButtonComponent},
-  props: ["dataJSON", "dataFields", "queryUrlForEntity", "userPermissions", "permissionToEdit"],
+  props: ["dataJSON", "dataFields", "queryUrlForEntity", "userPermissions", "permissionToEdit", "modelToEdit"],
   computed: {
     showActionsColumn() {
       return this.userHasPermissionToEdit(this.permissionToEdit);
@@ -56,6 +57,35 @@ export default {
     },
     userHasPermissionToEdit(permissionNeeded) {
       return this.userPermissions.includes(permissionNeeded);
+    },
+    editModelData(modelId) {
+      const requestUrl = `${this.queryUrlForEntity}${modelId}/`
+      axios.get(requestUrl)
+          .then(response => {
+            const data = {
+              id: response.data.success.id,
+              name: response.data.success.name,
+              email: response.data.success.email,
+              birth_date: response.data.success.birth_date
+            }
+
+            this.$store.dispatch("setUserDataToEdit", data);
+            console.log(this.modelToEdit)
+            this.$router.push({ name: this.modelToEdit });
+          })
+          .catch(error => {
+            console.log(error)
+          })
+    },
+    deleteModelData(modelId) {
+      const requestUrl = `${this.queryUrlForEntity}${modelId}/`
+      axios.delete(requestUrl)
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            console.log(error)
+          })
     },
   },
 };

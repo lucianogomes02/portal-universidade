@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from "@/views/LoginView.vue";
 import HomeView from "@/views/HomeView.vue";
-import StudentsView from "@/views/students/StudentsView.vue";
-import ProfessorsView from "@/views/professors/ProfessorsView.vue";
-import CoordinatorsView from "@/views/coordinators/CoordinatorsView.vue";
+import StudentsView from "@/views/users/students/StudentsView.vue";
+import ProfessorsView from "@/views/users/professors/ProfessorsView.vue";
+import CoordinatorsView from "@/views/users/coordinators/CoordinatorsView.vue";
 import CoursesView from "@/views/courses/CoursesView.vue";
 import GradesView from "@/views/grades/GradesView.vue";
+import UsersEditOrRegisterView from "@/views/users/UsersEditOrRegisterView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,31 @@ const router = createRouter({
       path: '/notas',
       name: 'Notas',
       component: GradesView,
+    },
+    {
+      path: '/alunos/edit/',
+      name: 'Alunos Edit',
+      component: UsersEditOrRegisterView,
+    },
+    {
+      path: '/professores/edit/',
+      name: 'Professores Edit',
+      component: UsersEditOrRegisterView,
+    },
+    {
+      path: '/coordenadores/edit/',
+      name: 'Coordenadores Edit',
+      component: UsersEditOrRegisterView,
+    },
+    {
+      path: '/disciplinas/edit/',
+      name: 'Disciplinas Edit',
+      component: UsersEditOrRegisterView,
+    },
+    {
+      path: '/notas/edit/',
+      name: 'Notas Edit',
+      component: UsersEditOrRegisterView,
     },
   ]
 })

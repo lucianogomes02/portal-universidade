@@ -1,60 +1,62 @@
 <template>
   <main class="model-list-container">
     <NavigationMenu :user="user" />
-    <section v-if="professors" class="main-section">
-      <h3 class="main-title">Professores</h3>
+    <section v-if="students" class="main-section">
+      <h3 class="main-title">Alunos</h3>
       <DataTableComponent
-          :dataJSON="professors"
+          :dataJSON="students"
           :dataFields="dataFields"
           :queryUrlForEntity="queryUrlForEntity"
           :userPermissions="user.permissions"
           :permissionToEdit="permissionToEdit"
+          :modelToEdit="modelToEdit"
       />
     </section>
-    <h3 v-else class="error-text">Opa! Parece que não há Professores aqui. Qualquer dúvida, entre em contato com nosso Suporte :)</h3>
+    <h3 v-else class="error-text">Opa! Parece que não há Alunos aqui. Qualquer dúvida, entre em contato com nosso Suporte :)</h3>
   </main>
 </template>
 
 <script>
 import NavigationMenu from "@/components/NavigationMenu.vue";
-import DataTableComponent from "@/components/DataTableComponent.vue";
 import {mapGetters} from "vuex";
-import {ref} from "vue";
+import DataTableComponent from "@/components/DataTableComponent.vue";
 import axios from "axios";
+import {ref} from "vue";
 
 export default {
-  name: "ProfessorsView",
-  components: {NavigationMenu, DataTableComponent},
+  name: "StudentsView",
+  components: {DataTableComponent, NavigationMenu},
   computed: {
     ...mapGetters(["user"]),
   },
   data() {
     return {
-      professors: null,
+      students: null,
       dataFields: {
         "name": "Nome",
         "email": "E-mail",
         "birth_date": "Data de Nascimento"
       },
-      queryUrlForEntity: "professors/",
-      permissionToEdit: "users.change_professor",
+      queryUrlForEntity: "students/",
+      permissionToEdit: "users.change_student",
+      modelToEdit: "Alunos Edit"
     }
   },
   setup() {
-    const professors = ref([]);
+    const students = ref([]);
 
-    axios.get(
-        "professors/")
+     axios.get(
+        "students/")
         .then( response => {
-          professors.value =  response.data.results
+          students.value =  response.data.results
         })
         .catch( error => {
           console.log(error)
         });
 
-    return {
-      professors
-    };
+     return {
+       students
+     };
   },
 }
 </script>

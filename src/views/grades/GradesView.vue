@@ -5,10 +5,11 @@
       <h3 class="main-title">Notas</h3>
       <DataTableComponent
           :dataJSON="grades"
-          :dataFields="dataFields"
+          :dataFields="gradesFields"
           :queryUrlForEntity="queryUrlForEntity"
           :userPermissions="user.permissions"
           :permissionToEdit="permissionToEdit"
+          :modelToEdit="modelToEdit"
       />
     </section>
     <h3 v-else class="error-text">Opa! Parece que não há Notas aqui. Qualquer dúvida, entre em contato com nosso Suporte :)</h3>
@@ -31,14 +32,15 @@ export default {
   data() {
     return {
       grades: null,
-      dataFields: {
-        "course": "Disciplina",
-        "professor": "Professor",
-        "student": "Aluno",
+      gradesFields: {
+        "course_name": "Disciplina",
+        "professor_name": "Professor",
+        "student_name": "Aluno",
         "value": "Nota",
       },
       queryUrlForEntity: "grades/",
       permissionToEdit: "grades.change_grade",
+      modelToEdit: "Notas Edit"
     }
   },
   setup() {

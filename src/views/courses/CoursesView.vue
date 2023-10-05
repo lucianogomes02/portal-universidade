@@ -9,6 +9,7 @@
           :queryUrlForEntity="queryUrlForEntity"
           :userPermissions="user.permissions"
           :permissionToEdit="permissionToEdit"
+          :modelToEdit="modelToEdit"
       />
     </section>
     <h3 v-else class="error-text">Opa! Parece que não há Disciplinas aqui. Qualquer dúvida, entre em contato com nosso Suporte :)</h3>
@@ -34,10 +35,11 @@ export default {
       dataFields: {
         "name": "Nome",
         "workload": "Carga Horária",
-        "professor": "Professor",
+        "professor_name": "Professor",
       },
       queryUrlForEntity: "courses/",
       permissionToEdit: "courses.change_course",
+      modelToEdit: "Disciplinas Edit"
     }
   },
   setup() {
