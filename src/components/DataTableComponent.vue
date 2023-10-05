@@ -55,7 +55,6 @@ export default {
       return `${day}/${month}/${year}`;
     },
     userHasPermissionToEdit(permissionNeeded) {
-      console.log(this.userPermissions)
       return this.userPermissions.includes(permissionNeeded);
     },
   },
