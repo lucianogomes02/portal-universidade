@@ -40,8 +40,8 @@ const store = createStore({
         setEntityData(context, { entityName, data }) {
             context.commit("setEntityData", { entityName, data });
         },
-        deleteUser(context, { entityName, userIdToRemove }) {
-            context.commit("removeUserFromEntity", { entityName, userIdToRemove });
+        deleteEntity(context, { entityName, userIdToRemove }) {
+            context.commit("removeEntityFromEntities", { entityName, userIdToRemove });
         },
         setModelDataToEdit: (context, modelDataToEdit) => {
             context.commit("modelDataToEdit", modelDataToEdit);
@@ -57,7 +57,7 @@ const store = createStore({
         setEntityData(state, { entityName, data }) {
             state.entities[entityName] = data;
         },
-        removeUserFromEntity(state, { entityName, userIdToRemove }) {
+        removeEntityFromEntities(state, { entityName, userIdToRemove }) {
             if (state.entities[entityName]) {
                 state.entities[entityName] = state.entities[entityName].filter(user => user.id !== userIdToRemove);
             }

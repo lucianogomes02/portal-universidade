@@ -75,7 +75,7 @@ export default {
       const requestUrl = `${this.queryUrlForEntity}/${modelId}/`
       axios.delete(requestUrl)
           .then(response => {
-            this.$store.dispatch("deleteUser", {entityName: this.queryUrlForEntity, userIdToRemove: modelId});
+            this.$store.dispatch("deleteEntity", {entityName: this.queryUrlForEntity, userIdToRemove: modelId});
           })
           .catch(error => {
             console.log(error)
