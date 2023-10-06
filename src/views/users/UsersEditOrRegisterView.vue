@@ -1,6 +1,8 @@
 <template>
   <NavigationMenu :user="user"/>
-  <UsersFormComponent :userData="userDataToEdit"/>
+  <div class="form-main-container">
+    <UsersFormComponent :userData="userDataToEdit"/>
+  </div>
 </template>
 
 <script>
@@ -18,5 +20,9 @@ export default {
 </script>
 
 <style scoped>
-
+.form-main-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
