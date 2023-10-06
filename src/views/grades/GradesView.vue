@@ -15,13 +15,13 @@
           :userPermissions="user.permissions"
           :permissionToEdit="permissionToEdit"
       />
-      <div class="button-container">
+      <div v-if="showRegisterGradeButton" class="button-container">
         <ButtonComponent button-name="Cadastrar" @click="goToGradeRegistration"/>
       </div>
     </section>
     <div v-else class="empty-data-message">
       <p>Nenhuma Nota cadastrada ainda.</p>
-      <div class="button-container-center">
+      <div v-if="showRegisterGradeButton" class="button-container-center">
         <ButtonComponent button-name="Cadastrar" @click="goToGradeRegistration"/>
       </div>
     </div>
@@ -45,7 +45,10 @@ export default {
     ...mapGetters(["user"]),
     grades() {
       return this.$store.getters.getEntityData("grades");
-    }
+    },
+    showRegisterGradeButton() {
+      return this.userHasPermissionToEdit(this.permissionToEdit);
+    },
   },
   data() {
     return {
@@ -83,6 +86,9 @@ export default {
   methods: {
     goToGradeRegistration(){
       this.showGradeModal = true;
+    },
+    userHasPermissionToEdit(permissionNeeded) {
+      return this.user.permissions.includes(permissionNeeded);
     },
   }
 }
