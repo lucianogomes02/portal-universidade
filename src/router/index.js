@@ -7,6 +7,7 @@ import CoordinatorsView from "@/views/users/coordinators/CoordinatorsView.vue";
 import CoursesView from "@/views/courses/CoursesView.vue";
 import GradesView from "@/views/grades/GradesView.vue";
 import UsersEditOrRegisterView from "@/views/users/UsersEditOrRegisterView.vue";
+import CourseEditOrRegisterView from "@/views/courses/CourseEditOrRegisterView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -79,7 +80,12 @@ const router = createRouter({
     {
       path: '/disciplinas/edit/',
       name: 'Disciplinas Edit',
-      component: UsersEditOrRegisterView,
+      component: CourseEditOrRegisterView,
+    },
+    {
+      path: '/disciplinas/register/',
+      name: 'Disciplinas Register',
+      component: CourseEditOrRegisterView,
     },
     {
       path: '/notas/edit/',

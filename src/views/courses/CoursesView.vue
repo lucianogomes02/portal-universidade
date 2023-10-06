@@ -11,8 +11,16 @@
           :permissionToEdit="permissionToEdit"
           :modelToEdit="modelToEdit"
       />
+      <div class="button-container">
+        <ButtonComponent button-name="Cadastrar" @click="goToCourseRegistration"/>
+      </div>
     </section>
-    <h3 v-else class="error-text">Opa! Parece que não há Disciplinas aqui. Qualquer dúvida, entre em contato com nosso Suporte :)</h3>
+    <div v-else class="empty-data-message">
+      <p>Nenhuma Disciplina cadastrada ainda.</p>
+      <div class="button-container-center">
+        <ButtonComponent button-name="Cadastrar" @click="goToCourseRegistration"/>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -22,10 +30,11 @@ import DataTableComponent from "@/components/DataTableComponent.vue";
 import {mapGetters, useStore} from "vuex";
 import {ref} from "vue";
 import axios from "axios";
+import ButtonComponent from "@/components/ButtonComponent.vue";
 
 export default {
   name: "CoursesView",
-  components: {NavigationMenu, DataTableComponent},
+  components: {ButtonComponent, NavigationMenu, DataTableComponent},
   computed: {
     ...mapGetters(["user"]),
     courses() {
@@ -63,6 +72,13 @@ export default {
       coursesData
     };
   },
+  methods: {
+    goToCourseRegistration(){
+      this.$store.dispatch("setModelDataToEdit", null)
+      this.$store.dispatch("setQueryUrlForEntity", this.queryUrlForEntity)
+      this.$router.push({ "name": "Disciplinas Register"})
+    }
+  }
 }
 </script>
 
@@ -75,8 +91,21 @@ export default {
   font-size: 30px;
 }
 
-.error-text {
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 100px;
+  margin-left: 78%;
+}
+
+.button-container button {
+  margin-right: 10px;
+}
+
+.empty-data-message {
   text-align: center;
   margin-top: 10vh;
+  font-size: 18px;
 }
 </style>

@@ -1,18 +1,18 @@
 <template>
   <NavigationMenu :user="user"/>
   <div class="form-main-container">
-    <UsersFormComponent :userData="modelDataToEdit"/>
+    <CoursesFormComponent :userData="modelDataToEdit"/>
   </div>
 </template>
 
 <script>
-import UsersFormComponent from "@/components/users/UsersFormComponent.vue";
 import NavigationMenu from "@/components/NavigationMenu.vue";
 import {mapGetters} from "vuex";
+import CoursesFormComponent from "@/components/courses/CoursesFormComponent.vue";
 
 export default {
-  name: "UsersEditOrRegisterView",
-  components: {NavigationMenu, UsersFormComponent},
+  name: "CourseEditOrRegisterView",
+  components: {NavigationMenu, CoursesFormComponent},
   computed: {
     ...mapGetters(["user", "modelDataToEdit"]),
   },

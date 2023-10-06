@@ -63,14 +63,7 @@ export default {
       const requestUrl = `${this.queryUrlForEntity}/${modelId}/`
       axios.get(requestUrl)
           .then(response => {
-            const data = {
-              id: response.data.success.id,
-              name: response.data.success.name,
-              email: response.data.success.email,
-              birth_date: response.data.success.birth_date
-            }
-
-            this.$store.dispatch("setUserDataToEdit", data);
+            this.$store.dispatch("setModelDataToEdit", response.data.success);
             this.$store.dispatch("setQueryUrlForEntity", this.queryUrlForEntity);
             this.$router.push({ name: this.modelToEdit });
           })

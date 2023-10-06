@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submitForm" class="form-container">
     <div v-for="(field, key) in formFields" :key="key" class="form-group">
-      <label class="form-label" v-if="key !== 'id'" :for="key">{{ field.label }}</label>
+      <label class="form-label" v-if="key !== 'id' || key !== 'professor'" :for="key">{{ field.label }}</label>
       <input
           v-if="key !== 'id'"
           class="form-input"
@@ -11,7 +11,12 @@
           v-model="formData[key]"
       />
     </div>
-    <button @click="registerOrEditUser">Enviar</button>
+    <label class="form-label">Professor</label>
+    <select class="form-input" v-model="selectedProfessorId">
+      <option value="">Selecione um professor</option>
+      <option v-for="professor in professors" :key="professor.id" :value="professor.id">{{ professor.name }}</option>
+    </select>
+    <button @click="registerOrEditCourse">Enviar</button>
   </form>
 </template>
 
@@ -20,34 +25,33 @@ import axios from "@/services";
 import {mapGetters} from "vuex";
 
 export default {
-  name: "UsersFormComponent",
+  name: "CoursesFormComponent",
   props: ["userData"],
   computed: {
     ...mapGetters(["queryUrlForEntity"]),
   },
   data() {
     return {
+      professors: [],
+      selectedProfessorId: null,
       formFields: {
         name: { label: "Nome", type: "text" },
-        email: { label: "E-mail", type: "email" },
-        password: {label: "Senha", type: "password"},
-        birth_date: { label: "Data de Nascimento", type: "date" },
+        workload: { label: "Carga Horária", type: "number" },
       },
       formData: this.userData || {},
     };
   },
   methods: {
-    submitFormToEditUser() {
+    submitFormToEditCourse() {
       const requestUrl = `${this.queryUrlForEntity}/${this.userData.id}/`
-      const updatedUserData = {
+      const updatedCourseData = {
         id: this.formData.id,
         name: this.formData.name,
-        email: this.formData.email,
-        password: this.formData.password,
-        birth_date: this.formData.birth_date
+        workload: this.formData.workload,
+        professor: this.selectedProfessorId,
       }
 
-      axios.put(requestUrl, updatedUserData)
+      axios.put(requestUrl, updatedCourseData)
           .then(response => {
             this.$store.dispatch("setQueryUrlForEntity", null)
           })
@@ -55,18 +59,17 @@ export default {
             console.log(error)
           }).finally(
           this.$router.go(-1)
-          )
+      )
     },
-    submitFormToRegisterUser() {
+    submitFormToRegisterCourse() {
       const requestUrl = `${this.queryUrlForEntity}/`
-      const newUserData = {
+      const newCourseData = {
         name: this.formData.name,
-        email: this.formData.email,
-        password: this.formData.password,
-        birth_date: this.formData.birth_date
+        workload: this.formData.workload,
+        professor: this.selectedProfessorId,
       }
 
-      axios.post(requestUrl, newUserData)
+      axios.post(requestUrl, newCourseData)
           .then(response => {
             this.$router.go(-1)
           })
@@ -74,14 +77,27 @@ export default {
             console.log(error)
           })
     },
-    registerOrEditUser() {
+    getProfessors() {
+      const requestUrl = "professors/"
+      axios.get(requestUrl)
+          .then(response => {
+            this.professors = response.data.results;
+          })
+          .catch(error => {
+            console.log(error)
+          })
+    },
+    registerOrEditCourse() {
       if (this.userData && this.userData.id) {
-        this.submitFormToEditUser()
+        this.submitFormToEditCourse()
       } else {
-        this.submitFormToRegisterUser();
+        this.submitFormToRegisterCourse();
       }
     }
-  }
+  },
+  mounted() {
+    this.getProfessors();
+  },
 }
 </script>
 

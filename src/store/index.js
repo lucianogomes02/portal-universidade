@@ -10,7 +10,7 @@ const state = {
         courses: null,
         grades: null,
     },
-    userDataToEdit: null,
+    modelDataToEdit: null,
     queryUrlForEntity: null
 };
 
@@ -26,8 +26,8 @@ const store = createStore({
         getEntityData: (state) => (entityName) => {
             return state.entities[entityName];
         },
-        userDataToEdit: (state) => {
-            return state.userDataToEdit;
+        modelDataToEdit: (state) => {
+            return state.modelDataToEdit;
         },
         queryUrlForEntity: (state) => {
             return state.queryUrlForEntity;
@@ -43,8 +43,8 @@ const store = createStore({
         deleteUser(context, { entityName, userIdToRemove }) {
             context.commit("removeUserFromEntity", { entityName, userIdToRemove });
         },
-        setUserDataToEdit: (context, userDataToEdit) => {
-            context.commit("userDataToEdit", userDataToEdit);
+        setModelDataToEdit: (context, modelDataToEdit) => {
+            context.commit("modelDataToEdit", modelDataToEdit);
         },
         setQueryUrlForEntity: (context, queryUrlForEntity) => {
             context.commit("queryUrlForEntity", queryUrlForEntity);
@@ -62,8 +62,8 @@ const store = createStore({
                 state.entities[entityName] = state.entities[entityName].filter(user => user.id !== userIdToRemove);
             }
         },
-        userDataToEdit(state, userDataToEdit) {
-            state.userDataToEdit = userDataToEdit;
+        modelDataToEdit(state, modelDataToEdit) {
+            state.modelDataToEdit = modelDataToEdit;
         },
         queryUrlForEntity(state, queryUrlForEntity) {
             state.queryUrlForEntity = queryUrlForEntity;

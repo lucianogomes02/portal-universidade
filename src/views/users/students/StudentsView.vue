@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     goToStudentRegistration(){
-      this.$store.dispatch("setUserDataToEdit", null)
+      this.$store.dispatch("setModelDataToEdit", null)
       this.$store.dispatch("setQueryUrlForEntity", this.queryUrlForEntity)
       this.$router.push({ "name": "Alunos Register"})
     }
