@@ -2,6 +2,7 @@
   <main class="model-list-container">
     <NavigationMenu :user="user" />
     <section v-if="students && students.length > 0" class="main-section">
+      <EnrollmentModalComponent :showModal="showEnrollmentModal" :students="students" @close="showEnrollmentModal = false"/>
       <h3 class="main-title">Alunos</h3>
       <DataTableComponent
           :dataJSON="students"
@@ -13,6 +14,7 @@
       />
       <div class="button-container">
         <ButtonComponent button-name="Cadastrar" @click="goToStudentRegistration"/>
+        <ButtonComponent class="enroll-student-button" button-name="Matricular" @click="enrollStudentToCourse"/>
       </div>
     </section>
     <div v-else class="empty-data-message">
@@ -31,10 +33,11 @@ import DataTableComponent from "@/components/DataTableComponent.vue";
 import axios from "@/services";
 import {ref} from "vue";
 import ButtonComponent from "@/components/ButtonComponent.vue";
+import EnrollmentModalComponent from "@/components/users/students/EnrollmentModalComponent.vue";
 
 export default {
   name: "StudentsView",
-  components: {ButtonComponent, DataTableComponent, NavigationMenu},
+  components: {EnrollmentModalComponent, ButtonComponent, DataTableComponent, NavigationMenu},
   computed: {
     ...mapGetters(["user"]),
     students() {
@@ -44,6 +47,7 @@ export default {
   data() {
     return {
       studentsData: null,
+      showEnrollmentModal: null,
       dataFields: {
         "name": "Nome",
         "email": "E-mail",
@@ -77,6 +81,9 @@ export default {
       this.$store.dispatch("setModelDataToEdit", null)
       this.$store.dispatch("setQueryUrlForEntity", this.queryUrlForEntity)
       this.$router.push({ "name": "Alunos Register"})
+    },
+    enrollStudentToCourse() {
+      this.showEnrollmentModal = true;
     }
   }
 }
@@ -107,5 +114,10 @@ export default {
   text-align: center;
   margin-top: 10vh;
   font-size: 18px;
+}
+
+.enroll-student-button {
+  color: #002fce;
+  border: 2px solid #002fce;
 }
 </style>
