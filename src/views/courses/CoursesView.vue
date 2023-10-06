@@ -1,11 +1,11 @@
 <template>
   <main class="model-list-container">
     <NavigationMenu :user="user" />
-    <section v-if="courses" class="main-section">
+    <section v-if="courses && courses.length > 0" class="main-section">
       <h3 class="main-title">Disciplinas</h3>
       <DataTableComponent
           :dataJSON="courses"
-          :dataFields="dataFields"
+          :dataFields="coursesFields"
           :queryUrlForEntity="queryUrlForEntity"
           :userPermissions="user.permissions"
           :permissionToEdit="permissionToEdit"
@@ -19,7 +19,7 @@
 <script>
 import NavigationMenu from "@/components/NavigationMenu.vue";
 import DataTableComponent from "@/components/DataTableComponent.vue";
-import {mapGetters} from "vuex";
+import {mapGetters, useStore} from "vuex";
 import {ref} from "vue";
 import axios from "axios";
 
@@ -28,34 +28,39 @@ export default {
   components: {NavigationMenu, DataTableComponent},
   computed: {
     ...mapGetters(["user"]),
+    courses() {
+      return this.$store.getters.getEntityData("courses");
+    }
   },
   data() {
     return {
-      courses: null,
-      dataFields: {
+      coursesData: null,
+      coursesFields: {
         "name": "Nome",
         "workload": "Carga Horária",
         "professor_name": "Professor",
       },
-      queryUrlForEntity: "courses/",
+      queryUrlForEntity: "courses",
       permissionToEdit: "courses.change_course",
       modelToEdit: "Disciplinas Edit"
     }
   },
   setup() {
-    const courses = ref([]);
+    const store = useStore();
+    const coursesData = ref([]);
 
     axios.get(
         "courses/")
         .then( response => {
-          courses.value =  response.data.results
+          coursesData.value =  response.data.results
+          store.dispatch("setEntityData", {entityName: "courses", data: coursesData.value});
         })
         .catch( error => {
           console.log(error)
         });
 
     return {
-      courses
+      coursesData
     };
   },
 }

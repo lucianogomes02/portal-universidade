@@ -7,6 +7,8 @@ const state = {
         students: null,
         professors: null,
         coordinators: null,
+        courses: null,
+        grades: null,
     },
     userDataToEdit: null,
     queryUrlForEntity: null

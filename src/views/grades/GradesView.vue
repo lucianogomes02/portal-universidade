@@ -1,7 +1,7 @@
 <template>
   <main class="model-list-container">
     <NavigationMenu :user="user" />
-    <section v-if="grades" class="main-section">
+    <section v-if="grades && grades.length > 0" class="main-section">
       <h3 class="main-title">Notas</h3>
       <DataTableComponent
           :dataJSON="grades"
@@ -19,7 +19,7 @@
 <script>
 import NavigationMenu from "@/components/NavigationMenu.vue";
 import DataTableComponent from "@/components/DataTableComponent.vue";
-import {mapGetters} from "vuex";
+import {mapGetters, useStore} from "vuex";
 import {ref} from "vue";
 import axios from "axios";
 
@@ -28,35 +28,40 @@ export default {
   components: {NavigationMenu, DataTableComponent},
   computed: {
     ...mapGetters(["user"]),
+    grades() {
+      return this.$store.getters.getEntityData("grades");
+    }
   },
   data() {
     return {
-      grades: null,
+      gradesData: null,
       gradesFields: {
         "course_name": "Disciplina",
         "professor_name": "Professor",
         "student_name": "Aluno",
         "value": "Nota",
       },
-      queryUrlForEntity: "grades/",
+      queryUrlForEntity: "grades",
       permissionToEdit: "grades.change_grade",
       modelToEdit: "Notas Edit"
     }
   },
   setup() {
-    const grades = ref([]);
+    const store = useStore();
+    const gradesData = ref([]);
 
     axios.get(
         "grades/")
         .then( response => {
-          grades.value =  response.data.results
+          gradesData.value =  response.data.results
+          store.dispatch("setEntityData", {entityName: "grades", data: gradesData.value});
         })
         .catch( error => {
           console.log(error)
         });
 
     return {
-      grades
+      gradesData
     };
   },
 }

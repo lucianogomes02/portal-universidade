@@ -1,7 +1,7 @@
 <template>
   <main class="model-list-container">
     <NavigationMenu :user="user" />
-    <section v-if="students" class="main-section">
+    <section v-if="students && students.length > 0" class="main-section">
       <h3 class="main-title">Alunos</h3>
       <DataTableComponent
           :dataJSON="students"
@@ -27,7 +27,7 @@ export default {
   name: "StudentsView",
   components: {DataTableComponent, NavigationMenu},
   computed: {
-    ...mapGetters(["user", "getEntityData"]),
+    ...mapGetters(["user"]),
     students() {
       return this.$store.getters.getEntityData("students");
     }

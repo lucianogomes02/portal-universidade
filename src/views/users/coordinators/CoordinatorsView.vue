@@ -1,7 +1,7 @@
 <template>
   <main class="model-list-container">
     <NavigationMenu :user="user" />
-    <section v-if="coordinators" class="main-section">
+    <section v-if="coordinators && coordinators.length > 0" class="main-section">
       <h3 class="main-title">Coordenadores</h3>
       <DataTableComponent
           :dataJSON="coordinators"
