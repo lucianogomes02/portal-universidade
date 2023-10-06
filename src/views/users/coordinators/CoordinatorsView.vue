@@ -19,43 +19,48 @@
 <script>
 import NavigationMenu from "@/components/NavigationMenu.vue";
 import DataTableComponent from "@/components/DataTableComponent.vue";
-import {mapGetters} from "vuex";
+import {mapGetters, useStore} from "vuex";
 import {ref} from "vue";
-import axios from "axios";
+import axios from "@/services";
 
 export default {
   name: "CoordinatorsView",
   components: {NavigationMenu, DataTableComponent},
   computed: {
     ...mapGetters(["user"]),
+    coordinators() {
+      return this.$store.getters.getEntityData("coordinators");
+    }
   },
   data() {
     return {
-      coordinators: null,
+      coordinatorsData: null,
       dataFields: {
         "name": "Nome",
         "email": "E-mail",
         "birth_date": "Data de Nascimento"
       },
-      queryUrlForEntity: "coordinators/",
+      queryUrlForEntity: "coordinators",
       permissionToEdit: "users.change_coordinator",
       modelToEdit: "Coordenadores Edit"
     }
   },
   setup() {
-    const coordinators = ref([]);
+    const store = useStore();
+    const coordinatorsData = ref([]);
 
     axios.get(
         "coordinators/")
         .then( response => {
-          coordinators.value =  response.data.results
+          coordinatorsData.value =  response.data.results;
+          store.dispatch("setEntityData", {entityName: "coordinators", data: coordinatorsData.value});
         })
         .catch( error => {
           console.log(error)
         });
 
     return {
-      coordinators
+      coordinatorsData
     };
   },
 }

@@ -3,7 +3,7 @@
     <table class="data-table">
       <thead class="data-table-columns">
         <tr>
-          <th v-for="(dataValue, dataKey) in dataJSON[0]" :key="dataKey">
+          <th v-for="(dataValue, dataKey) in entityData[0]" :key="dataKey">
             <div class="column-name" v-if="dataKey !== 'id'">
               {{ dataFields[dataKey] }}
             </div>
@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody class="data-table-rows">
-        <tr v-for="(data, index) in dataJSON" :key="index">
+        <tr v-for="(data, index) in entityData" :key="index">
           <td v-for="(dataValue, dataKey) in data" :key="dataKey">
             <div class="row-value">
               {{ dataKey !== 'id' ? (dataKey === 'birth_date' ? formatDate(dataValue) : dataValue) : '' }}
@@ -37,14 +37,18 @@
 <script>
 import ButtonComponent from "@/components/ButtonComponent.vue";
 import axios from "@/services";
+import {mapGetters} from "vuex";
 
 export default {
   name: "DataTableComponent",
   components: {ButtonComponent},
-  props: ["dataJSON", "dataFields", "queryUrlForEntity", "userPermissions", "permissionToEdit", "modelToEdit"],
+  props: ["dataFields", "queryUrlForEntity", "userPermissions", "permissionToEdit", "modelToEdit"],
   computed: {
     showActionsColumn() {
       return this.userHasPermissionToEdit(this.permissionToEdit);
+    },
+    entityData() {
+      return this.$store.getters.getEntityData(this.queryUrlForEntity);
     },
   },
   methods: {
@@ -56,7 +60,7 @@ export default {
       return this.userPermissions.includes(permissionNeeded);
     },
     editModelData(modelId) {
-      const requestUrl = `${this.queryUrlForEntity}${modelId}/`
+      const requestUrl = `${this.queryUrlForEntity}/${modelId}/`
       axios.get(requestUrl)
           .then(response => {
             const data = {
@@ -75,10 +79,10 @@ export default {
           })
     },
     deleteModelData(modelId) {
-      const requestUrl = `${this.queryUrlForEntity}${modelId}/`
+      const requestUrl = `${this.queryUrlForEntity}/${modelId}/`
       axios.delete(requestUrl)
           .then(response => {
-            console.log(response)
+            this.$store.dispatch("deleteUser", {entityName: this.queryUrlForEntity, userIdToRemove: modelId});
           })
           .catch(error => {
             console.log(error)

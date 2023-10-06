@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     submitFormToEditUser() {
-      const requestUrl = `${this.queryUrlForEntity}${this.userData.id}/`
+      const requestUrl = `${this.queryUrlForEntity}/${this.userData.id}/`
       const updatedUserData = {
         id: this.formData.id,
         name: this.formData.name,

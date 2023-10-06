@@ -19,43 +19,48 @@
 <script>
 import NavigationMenu from "@/components/NavigationMenu.vue";
 import DataTableComponent from "@/components/DataTableComponent.vue";
-import {mapGetters} from "vuex";
+import {mapGetters, useStore} from "vuex";
 import {ref} from "vue";
-import axios from "axios";
+import axios from "@/services";
 
 export default {
   name: "ProfessorsView",
   components: {NavigationMenu, DataTableComponent},
   computed: {
     ...mapGetters(["user"]),
+    professors() {
+      return this.$store.getters.getEntityData("professors");
+    }
   },
   data() {
     return {
-      professors: null,
+      professorsData: null,
       dataFields: {
         "name": "Nome",
         "email": "E-mail",
         "birth_date": "Data de Nascimento"
       },
-      queryUrlForEntity: "professors/",
+      queryUrlForEntity: "professors",
       permissionToEdit: "users.change_professor",
       modelToEdit: "Professores Edit"
     }
   },
   setup() {
-    const professors = ref([]);
+    const store = useStore();
+    const professorsData = ref([]);
 
     axios.get(
         "professors/")
         .then( response => {
-          professors.value =  response.data.results
+          professorsData.value =  response.data.results;
+          store.dispatch("setEntityData", {entityName: "professors", data: professorsData.value});
         })
         .catch( error => {
           console.log(error)
         });
 
     return {
-      professors
+      professorsData
     };
   },
 }
