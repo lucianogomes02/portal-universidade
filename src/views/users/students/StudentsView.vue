@@ -11,8 +11,16 @@
           :permissionToEdit="permissionToEdit"
           :modelToEdit="modelToEdit"
       />
+      <div class="button-container">
+        <ButtonComponent button-name="Cadastrar" @click="goToStudentRegistration"/>
+      </div>
     </section>
-    <h3 v-else class="error-text">Opa! Parece que não há Alunos aqui. Qualquer dúvida, entre em contato com nosso Suporte :)</h3>
+    <div v-else class="empty-data-message">
+      <p>Nenhum aluno cadastrado ainda.</p>
+      <div class="button-container-center">
+        <ButtonComponent button-name="Cadastrar" @click="goToStudentRegistration"/>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -22,10 +30,11 @@ import {mapGetters, useStore} from "vuex";
 import DataTableComponent from "@/components/DataTableComponent.vue";
 import axios from "@/services";
 import {ref} from "vue";
+import ButtonComponent from "@/components/ButtonComponent.vue";
 
 export default {
   name: "StudentsView",
-  components: {DataTableComponent, NavigationMenu},
+  components: {ButtonComponent, DataTableComponent, NavigationMenu},
   computed: {
     ...mapGetters(["user"]),
     students() {
@@ -63,6 +72,12 @@ export default {
        studentsData
      };
   },
+  methods: {
+    goToStudentRegistration(){
+      this.$store.dispatch("setUserDataToEdit", null)
+      this.$router.push({ "name": "Alunos Register"})
+    }
+  }
 }
 </script>
 
@@ -75,8 +90,21 @@ export default {
   font-size: 30px;
 }
 
-.error-text {
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 100px;
+  margin-left: 78%;
+}
+
+.button-container button {
+  margin-right: 10px;
+}
+
+.empty-data-message {
   text-align: center;
   margin-top: 10vh;
+  font-size: 18px;
 }
 </style>

@@ -11,7 +11,7 @@
           v-model="formData[key]"
       />
     </div>
-    <button @click="submitFormToEditUser">Enviar</button>
+    <button @click="registerOrEditUser">Enviar</button>
   </form>
 </template>
 
@@ -28,9 +28,10 @@ export default {
   data() {
     return {
       formFields: {
-        name: { label: 'Nome', type: 'text' },
-        email: { label: 'E-mail', type: 'email' },
-        birth_date: { label: 'Data de Nascimento', type: 'date' },
+        name: { label: "Nome", type: "text" },
+        email: { label: "E-mail", type: "email" },
+        password: {label: "Senha", type: "password"},
+        birth_date: { label: "Data de Nascimento", type: "date" },
       },
       formData: this.userData || {},
     };
@@ -42,18 +43,43 @@ export default {
         id: this.formData.id,
         name: this.formData.name,
         email: this.formData.email,
+        password: this.formData.password,
         birth_date: this.formData.birth_date
       }
 
       axios.put(requestUrl, updatedUserData)
           .then(response => {
-            console.log(response)
+            this.$router.go(-1)
           })
           .catch(error => {
             console.log(error)
           })
     },
-  },
+    submitFormToRegisterUser() {
+      const requestUrl = `${this.queryUrlForEntity}/`
+      const newUserData = {
+        name: this.formData.name,
+        email: this.formData.email,
+        password: this.formData.password,
+        birth_date: this.formData.birth_date
+      }
+
+      axios.post(requestUrl, newUserData)
+          .then(response => {
+            this.$router.go(-1)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+    },
+    registerOrEditUser() {
+      if (Object.keys(this.userData).length === 0) {
+        this.submitFormToRegisterUser();
+      } else {
+        this.submitFormToEditUser()
+      }
+    }
+  }
 }
 </script>
 

@@ -52,6 +52,11 @@ const router = createRouter({
       component: UsersEditOrRegisterView,
     },
     {
+      path: '/alunos/register/',
+      name: 'Alunos Register',
+      component: UsersEditOrRegisterView,
+    },
+    {
       path: '/professores/edit/',
       name: 'Professores Edit',
       component: UsersEditOrRegisterView,
