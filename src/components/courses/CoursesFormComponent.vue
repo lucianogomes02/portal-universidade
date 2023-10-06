@@ -104,7 +104,7 @@ export default {
 <style scoped>
 .form-container {
   width: 50vh;
-  padding: 20px;
+  padding: 30px;
   margin-top: 20vh;
   background-color: #f5f5f5;
   border: 1px solid #ddd;
@@ -144,6 +144,7 @@ button {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 2vh;
 }
 
 button:hover {

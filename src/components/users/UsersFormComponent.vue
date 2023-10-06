@@ -88,7 +88,7 @@ export default {
 <style scoped>
 .form-container {
   width: 50vh;
-  padding: 20px;
+  padding: 30px;
   margin-top: 20vh;
   background-color: #f5f5f5;
   border: 1px solid #ddd;

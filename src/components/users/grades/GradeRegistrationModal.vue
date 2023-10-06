@@ -19,7 +19,7 @@
           <label for="grade">Nota (entre 0 e 10):</label>
           <input
               type="number"
-              id="grade"
+              class="grade"
               v-model="grade"
               min="0"
               max="10"
@@ -38,7 +38,6 @@
 
 <script>
 import axios from "@/services";
-import {mapGetters} from "vuex";
 
 export default {
   name: "GradeRegistrationModal",
@@ -159,6 +158,12 @@ select {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+.grade{
+  width: 5vh;
+  height: 5vh;
+  font-size: 2vh;
 }
 
 button {

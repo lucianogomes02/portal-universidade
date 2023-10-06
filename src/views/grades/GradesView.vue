@@ -1,12 +1,12 @@
 <template>
   <main class="model-list-container">
     <NavigationMenu :user="user" />
+    <GradeRegistrationModal
+        :showModal="showGradeModal"
+        :professor="this.user.id"
+        @close="showGradeModal = false"
+    />
     <section v-if="grades && grades.length > 0" class="main-section">
-      <GradeRegistrationModal
-          :showModal="showGradeModal"
-          :professor="this.user.id"
-          @close="showGradeModal = false"
-      />
       <h3 class="main-title">Notas</h3>
       <DataTableComponent
           :dataJSON="grades"
@@ -20,7 +20,7 @@
       </div>
     </section>
     <div v-else class="empty-data-message">
-      <p>Nenhum Aluno cadastrado ainda.</p>
+      <p>Nenhuma Nota cadastrada ainda.</p>
       <div class="button-container-center">
         <ButtonComponent button-name="Cadastrar" @click="goToGradeRegistration"/>
       </div>
