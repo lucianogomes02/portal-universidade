@@ -2,6 +2,10 @@
   <main class="model-list-container">
     <NavigationMenu :user="user" />
     <section v-if="courses && courses.length > 0" class="main-section">
+      <EnrollmentsListModal
+          :showModal="showEnrollmentModal"
+          @close="showEnrollmentModal = false"
+      />
       <h3 class="main-title">Disciplinas</h3>
       <DataTableComponent
           :dataJSON="courses"
@@ -13,6 +17,7 @@
       />
       <div class="button-container">
         <ButtonComponent button-name="Cadastrar" @click="goToCourseRegistration"/>
+        <ButtonComponent class="enrollments-modal-button" button-name="Ver Matriculas" @click="openEnrollmentsModal"/>
       </div>
     </section>
     <div v-else class="empty-data-message">
@@ -31,10 +36,12 @@ import {mapGetters, useStore} from "vuex";
 import {ref} from "vue";
 import axios from "@/services";
 import ButtonComponent from "@/components/ButtonComponent.vue";
+import EnrollmentsListModal from "@/components/courses/EnrollmentsListModal.vue";
+import EnrollmentModalComponent from "@/components/users/students/EnrollmentModalComponent.vue";
 
 export default {
   name: "CoursesView",
-  components: {ButtonComponent, NavigationMenu, DataTableComponent},
+  components: {EnrollmentModalComponent, EnrollmentsListModal, ButtonComponent, NavigationMenu, DataTableComponent},
   computed: {
     ...mapGetters(["user"]),
     courses() {
@@ -44,6 +51,7 @@ export default {
   data() {
     return {
       coursesData: null,
+      showEnrollmentModal: null,
       coursesFields: {
         "name": "Nome",
         "workload": "Carga Horária",
@@ -77,6 +85,9 @@ export default {
       this.$store.dispatch("setModelDataToEdit", null)
       this.$store.dispatch("setQueryUrlForEntity", this.queryUrlForEntity)
       this.$router.push({ "name": "Disciplinas Register"})
+    },
+    openEnrollmentsModal() {
+      this.showEnrollmentModal = true;
     }
   }
 }
