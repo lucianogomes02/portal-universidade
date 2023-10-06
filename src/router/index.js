@@ -8,6 +8,7 @@ import CoursesView from "@/views/courses/CoursesView.vue";
 import GradesView from "@/views/grades/GradesView.vue";
 import UsersEditOrRegisterView from "@/views/users/UsersEditOrRegisterView.vue";
 import CourseEditOrRegisterView from "@/views/courses/CourseEditOrRegisterView.vue";
+import GradeRegistrationModal from "@/components/users/grades/GradeRegistrationModal.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -88,9 +89,14 @@ const router = createRouter({
       component: CourseEditOrRegisterView,
     },
     {
-      path: '/notas/edit/',
-      name: 'Notas Edit',
-      component: UsersEditOrRegisterView,
+      path: '/notas/register/',
+      name: 'Notas Register',
+      component: GradeRegistrationModal,
+    },
+    {
+      path: '/notas/register/',
+      name: 'Notas Register',
+      component: GradeRegistrationModal,
     },
   ]
 })

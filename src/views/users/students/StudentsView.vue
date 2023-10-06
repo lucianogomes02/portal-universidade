@@ -2,7 +2,11 @@
   <main class="model-list-container">
     <NavigationMenu :user="user" />
     <section v-if="students && students.length > 0" class="main-section">
-      <EnrollmentModalComponent :showModal="showEnrollmentModal" :students="students" @close="showEnrollmentModal = false"/>
+      <EnrollmentModalComponent
+          :showModal="showEnrollmentModal"
+          :students="students"
+          @close="showEnrollmentModal = false"
+      />
       <h3 class="main-title">Alunos</h3>
       <DataTableComponent
           :dataJSON="students"

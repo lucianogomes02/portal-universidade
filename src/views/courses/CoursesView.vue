@@ -29,7 +29,7 @@ import NavigationMenu from "@/components/NavigationMenu.vue";
 import DataTableComponent from "@/components/DataTableComponent.vue";
 import {mapGetters, useStore} from "vuex";
 import {ref} from "vue";
-import axios from "axios";
+import axios from "@/services";
 import ButtonComponent from "@/components/ButtonComponent.vue";
 
 export default {

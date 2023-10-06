@@ -9,7 +9,6 @@
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="content">
-        <a href="#">Perfil</a>
         <a href="javascript:void(0)" @click="handleLogout">Logout</a>
       </div>
     </div>

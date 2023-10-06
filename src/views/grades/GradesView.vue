@@ -2,6 +2,11 @@
   <main class="model-list-container">
     <NavigationMenu :user="user" />
     <section v-if="grades && grades.length > 0" class="main-section">
+      <GradeRegistrationModal
+          :showModal="showGradeModal"
+          :professor="this.user.id"
+          @close="showGradeModal = false"
+      />
       <h3 class="main-title">Notas</h3>
       <DataTableComponent
           :dataJSON="grades"
@@ -9,10 +14,17 @@
           :queryUrlForEntity="queryUrlForEntity"
           :userPermissions="user.permissions"
           :permissionToEdit="permissionToEdit"
-          :modelToEdit="modelToEdit"
       />
+      <div class="button-container">
+        <ButtonComponent button-name="Cadastrar" @click="goToGradeRegistration"/>
+      </div>
     </section>
-    <h3 v-else class="error-text">Opa! Parece que não há Notas aqui. Qualquer dúvida, entre em contato com nosso Suporte :)</h3>
+    <div v-else class="empty-data-message">
+      <p>Nenhum Aluno cadastrado ainda.</p>
+      <div class="button-container-center">
+        <ButtonComponent button-name="Cadastrar" @click="goToGradeRegistration"/>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -21,11 +33,14 @@ import NavigationMenu from "@/components/NavigationMenu.vue";
 import DataTableComponent from "@/components/DataTableComponent.vue";
 import {mapGetters, useStore} from "vuex";
 import {ref} from "vue";
-import axios from "axios";
+import axios from "@/services";
+import GradeRegistrationModal from "@/components/users/grades/GradeRegistrationModal.vue";
+import EnrollmentModalComponent from "@/components/users/students/EnrollmentModalComponent.vue";
+import ButtonComponent from "@/components/ButtonComponent.vue";
 
 export default {
   name: "GradesView",
-  components: {NavigationMenu, DataTableComponent},
+  components: {ButtonComponent, EnrollmentModalComponent, GradeRegistrationModal, NavigationMenu, DataTableComponent},
   computed: {
     ...mapGetters(["user"]),
     grades() {
@@ -35,6 +50,7 @@ export default {
   data() {
     return {
       gradesData: null,
+      showGradeModal: null,
       gradesFields: {
         "course_name": "Disciplina",
         "professor_name": "Professor",
@@ -64,6 +80,11 @@ export default {
       gradesData
     };
   },
+  methods: {
+    goToGradeRegistration(){
+      this.showGradeModal = true;
+    },
+  }
 }
 </script>
 
@@ -76,8 +97,21 @@ export default {
   font-size: 30px;
 }
 
-.error-text {
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 100px;
+  margin-left: 78%;
+}
+
+.button-container button {
+  margin-right: 10px;
+}
+
+.empty-data-message {
   text-align: center;
   margin-top: 10vh;
+  font-size: 18px;
 }
 </style>
