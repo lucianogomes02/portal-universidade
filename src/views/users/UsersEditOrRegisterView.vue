@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import UsersFormComponent from "@/components/UsersFormComponent.vue";
+import UsersFormComponent from "@/components/users/UsersFormComponent.vue";
 import NavigationMenu from "@/components/NavigationMenu.vue";
 import {mapGetters} from "vuex";
 
