@@ -62,8 +62,18 @@ const router = createRouter({
       component: UsersEditOrRegisterView,
     },
     {
+      path: '/professores/register/',
+      name: 'Professores Register',
+      component: UsersEditOrRegisterView,
+    },
+    {
       path: '/coordenadores/edit/',
       name: 'Coordenadores Edit',
+      component: UsersEditOrRegisterView,
+    },
+    {
+      path: '/coordenadores/register/',
+      name: 'Coordenadores Register',
       component: UsersEditOrRegisterView,
     },
     {

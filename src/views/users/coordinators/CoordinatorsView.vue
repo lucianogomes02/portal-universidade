@@ -11,8 +11,16 @@
           :permissionToEdit="permissionToEdit"
           :modelToEdit="modelToEdit"
       />
+      <div class="button-container">
+        <ButtonComponent button-name="Cadastrar" @click="goToCoordinatorRegistration"/>
+      </div>
     </section>
-    <h3 v-else class="error-text">Opa! Parece que não há Coordenadores aqui. Qualquer dúvida, entre em contato com nosso Suporte :)</h3>
+    <div v-else class="empty-data-message">
+      <p>Nenhum Coordenador cadastrado ainda.</p>
+      <div class="button-container-center">
+        <ButtonComponent button-name="Cadastrar" @click="goToCoordinatorRegistration"/>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -22,10 +30,11 @@ import DataTableComponent from "@/components/DataTableComponent.vue";
 import {mapGetters, useStore} from "vuex";
 import {ref} from "vue";
 import axios from "@/services";
+import ButtonComponent from "@/components/ButtonComponent.vue";
 
 export default {
   name: "CoordinatorsView",
-  components: {NavigationMenu, DataTableComponent},
+  components: {ButtonComponent, NavigationMenu, DataTableComponent},
   computed: {
     ...mapGetters(["user"]),
     coordinators() {
@@ -63,6 +72,13 @@ export default {
       coordinatorsData
     };
   },
+  methods: {
+    goToCoordinatorRegistration(){
+      this.$store.dispatch("setUserDataToEdit", null)
+      this.$store.dispatch("setQueryUrlForEntity", this.queryUrlForEntity)
+      this.$router.push({ "name": "Coordenadores Register"})
+    }
+  }
 }
 </script>
 
@@ -75,8 +91,21 @@ export default {
   font-size: 30px;
 }
 
-.error-text {
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 100px;
+  margin-left: 78%;
+}
+
+.button-container button {
+  margin-right: 10px;
+}
+
+.empty-data-message {
   text-align: center;
   margin-top: 10vh;
+  font-size: 18px;
 }
 </style>

@@ -16,7 +16,7 @@
       </div>
     </section>
     <div v-else class="empty-data-message">
-      <p>Nenhum aluno cadastrado ainda.</p>
+      <p>Nenhum Aluno cadastrado ainda.</p>
       <div class="button-container-center">
         <ButtonComponent button-name="Cadastrar" @click="goToStudentRegistration"/>
       </div>
@@ -75,6 +75,7 @@ export default {
   methods: {
     goToStudentRegistration(){
       this.$store.dispatch("setUserDataToEdit", null)
+      this.$store.dispatch("setQueryUrlForEntity", this.queryUrlForEntity)
       this.$router.push({ "name": "Alunos Register"})
     }
   }

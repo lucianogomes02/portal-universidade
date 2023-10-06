@@ -49,11 +49,13 @@ export default {
 
       axios.put(requestUrl, updatedUserData)
           .then(response => {
-            this.$router.go(-1)
+            this.$router.dispatch("setQueryUrlForEntity", null)
           })
           .catch(error => {
             console.log(error)
-          })
+          }).finally(
+          this.$router.go(-1)
+          )
     },
     submitFormToRegisterUser() {
       const requestUrl = `${this.queryUrlForEntity}/`
@@ -73,10 +75,10 @@ export default {
           })
     },
     registerOrEditUser() {
-      if (Object.keys(this.userData).length === 0) {
-        this.submitFormToRegisterUser();
-      } else {
+      if (this.userData && this.userData.id) {
         this.submitFormToEditUser()
+      } else {
+        this.submitFormToRegisterUser();
       }
     }
   }
